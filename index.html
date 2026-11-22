@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f3eff6"><title>Rosario de dos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500;1,600&family=Figtree:wght@400;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}</style>
+<style>
+/* Concepto: oración a dos voces. Un hilo de cuentas partidas por la mitad: ámbar para Isaac, rosa para Zayra, violeta cuando rezan juntos. */
+:root{
+  --bg:#f3eff6; --surface:#ffffff; --surface2:#ebe5f3; --ink:#231f3a; --mute:#5f597d; --line:#d9d1e6;
+  --isaac:#96620f; --zayra:#b03a60; --both:#5a4fb0; --on-accent:#ffffff; --off:#cdc4dd; --ok:#2f8f5b; --warn:#9a3d12;
+  --shadow:0 12px 32px rgba(35,31,58,.14);
+  --display:"Cormorant Garamond",Georgia,serif; --text:"Newsreader",Georgia,serif; --ui:"Figtree",system-ui,sans-serif;
+  --size:21px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12142a; --surface:#1b1e3a; --surface2:#252954; --ink:#f1ecf7; --mute:#a9a6c8; --line:#2f3463;
+  --isaac:#f0b95a; --zayra:#f08fae; --both:#b3a8ff; --on-accent:#1d1402; --off:#363b6b; --ok:#5cc58c; --warn:#f0a070;
+  --shadow:0 12px 32px rgba(0,0,0,.45); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12142a; --surface:#1b1e3a; --surface2:#252954; --ink:#f1ecf7; --mute:#a9a6c8; --line:#2f3463;
+  --isaac:#f0b95a; --zayra:#f08fae; --both:#b3a8ff; --on-accent:#1d1402; --off:#363b6b; --ok:#5cc58c; --warn:#f0a070;
+  --shadow:0 12px 32px rgba(0,0,0,.45); color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 150px}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--both);outline-offset:2px}
+.wrap{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+
+header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600}
+h1{font-family:var(--display);font-style:italic;font-weight:600;font-size:40px;line-height:1.05;margin:4px 0 0;text-wrap:balance}
+h1 span{color:var(--zayra)}
+h2{font-family:var(--display);font-style:italic;font-weight:600;font-size:30px;line-height:1.1;margin:0 0 12px;text-wrap:balance}
+.iconbtn{min-width:44px;min-height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;flex:none}
+.iconbtn svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round}
+
+.banner{font-size:14px;border:1px solid var(--warn);border-radius:14px;padding:10px 14px;background:var(--surface);display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+.banner span{flex:1 1 200px;min-width:0}
+.banner button{border:0;background:none;text-decoration:underline;font-weight:700;min-height:36px;padding:0}
+
+.mini{display:flex;align-items:center;gap:18px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:18px}
+.mini svg{width:min(46%,160px);height:auto;flex:none}
+.hl{fill:none;stroke:var(--off);stroke-width:3.4}
+.mi{min-width:0;flex:1}
+.pct{font-family:var(--display);font-style:italic;font-weight:600;font-size:48px;line-height:1;margin:0}
+.pct small{font-size:24px}
+.lbl{margin:2px 0 10px;font-size:13px;color:var(--mute)}
+.now{margin:0 0 10px;font-weight:600;font-size:15px}
+.key{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--mute)}
+.key span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:6px}
+
+.people{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.person{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:10px 14px;min-width:0}
+.person.isaac{--c:var(--isaac)} .person.zayra{--c:var(--zayra)}
+.person.turn{border-color:var(--c)}
+.person b{display:flex;align-items:center;gap:8px;font-size:15px}
+.person b::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.person b small{font-weight:500;color:var(--mute);font-size:12px}
+.person p{margin:2px 0 0;font-size:13px;color:var(--mute);display:flex;align-items:center;gap:6px}
+.person.turn p{color:var(--ink);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--off);flex:none}
+.dot.on{background:var(--ok)}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:20px 18px;box-shadow:var(--shadow);min-width:0}
+.card.o-i{border-color:var(--isaac)} .card.o-z{border-color:var(--zayra)} .card.o-x{border-color:var(--both)}
+.center{text-align:center}
+.muted{color:var(--mute)}
+.small{font-size:14px}
+.strand{width:100%;height:auto;display:block}
+.strand .cord{fill:none;stroke:var(--off);stroke-width:2}
+.hb{fill:var(--off)}
+.hb.i{fill:var(--isaac)} .hb.z{fill:var(--zayra)} .hb.both{fill:var(--both)}
+.ring{fill:none;stroke:var(--c);stroke-width:2.5;transform-box:fill-box;transform-origin:center;animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.8);opacity:1}100%{transform:scale(1.9);opacity:0}}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mute);margin-top:8px}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:6px}
+
+.mys{font-family:var(--display);font-style:italic;font-weight:600;font-size:27px;line-height:1.1;margin:14px 0 2px;text-wrap:balance}
+.step{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--c,var(--mute));margin:0 0 10px}
+.prayer{white-space:pre-line;font-family:var(--text);font-size:var(--size);line-height:1.6;margin:0;max-width:60ch}
+.prayer + .prayer{margin-top:12px;color:var(--mute);font-size:calc(var(--size) - 4px)}
+.half{margin:12px 0 0;padding:12px 14px;background:var(--surface2);border-radius:14px;border:2px solid transparent}
+.half.active{border-color:var(--c)}
+.half .tag{display:block;font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-bottom:4px}
+.half .prayer + .prayer{font-size:inherit;color:inherit;margin-top:8px}
+.half.isaac{--c:var(--isaac)} .half.zayra{--c:var(--zayra)}
+.half:not(.active){opacity:.72}
+.note{font-size:14px;background:var(--surface2);border-radius:12px;padding:10px 14px;margin:12px 0 0;color:var(--mute)}
+.status{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;color:var(--mute);margin:14px 0 0;text-align:center}
+.status::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--both);animation:breath 2s ease-in-out infinite;flex:none}
+@keyframes breath{50%{opacity:.3}}
+.undo{margin-top:14px;background:none;border:none;color:var(--mute);font-size:14px;text-decoration:underline;min-height:44px;padding:0 4px}
+.eyebrow2{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--mute);margin:0 0 6px}
+
+.btn{min-height:48px;border-radius:14px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font-weight:700;padding:0 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;text-decoration:none}
+.btn.main{background:var(--both);border-color:var(--both);color:var(--on-accent)}
+.btn.warn{border-color:var(--zayra);color:var(--zayra);background:var(--surface)}
+.btn.ghost{background:transparent}
+.btn.full{width:100%;margin-top:10px}
+.btn:disabled{opacity:.5}
+.btns{display:flex;gap:8px;margin-top:12px}
+.btns>*{flex:1;min-width:0}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.choice{padding:22px 6px;border-radius:20px;border:2px solid var(--c);background:var(--surface);color:var(--c);font-size:20px;font-weight:700;min-height:72px}
+.choice.isaac{--c:var(--isaac)} .choice.zayra{--c:var(--zayra)}
+
+.list{margin:12px 0 0;padding-left:26px;font-family:var(--text);font-size:20px;line-height:1.55}
+.list li{padding-left:4px;margin:2px 0}
+label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
+textarea,select,input[type=text]{display:block;width:100%;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px;font-size:16px}
+textarea{resize:vertical;min-height:150px;font-family:var(--text);font-size:19px;line-height:1.5}
+input[type=range]{width:100%;min-height:44px;accent-color:var(--both)}
+.pbox{padding:14px 16px;background:var(--surface2);border-radius:16px;margin:10px 0;border-left:5px solid var(--c)}
+.pbox.isaac{--c:var(--isaac)} .pbox.zayra{--c:var(--zayra)}
+.pbox b{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.pbox p{margin:6px 0 0;white-space:pre-wrap;font-family:var(--text);font-size:19px;line-height:1.5;overflow-wrap:anywhere}
+.offer{background:var(--surface2);border-radius:16px;padding:14px 16px;margin:12px 0}
+.offer b{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--both)}
+.offer p{margin:6px 0 0}
+.privacy{font-size:13px;color:var(--mute);margin:12px 0 0}
+
+details.reflex{margin-top:14px;background:var(--surface2);border-radius:16px}
+details.reflex>summary{font-weight:700;cursor:pointer;min-height:48px;display:flex;align-items:center;padding:0 16px;list-style:none}
+details.reflex>summary::-webkit-details-marker{display:none}
+details.reflex>summary::after{content:"+";margin-left:auto;font-size:22px;color:var(--mute)}
+details.reflex[open]>summary::after{content:"–"}
+details.reflex .inner{padding:0 16px 14px}
+details.reflex .cita{font-size:13px;font-weight:700;color:var(--both);margin:0 0 4px}
+details.reflex p{font-family:var(--text);font-size:18px;line-height:1.55;margin:8px 0 0}
+
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:12px}
+.cal .dn{text-align:center;font-size:11px;color:var(--mute);font-weight:700}
+.day{background:var(--surface2);min-height:54px;border:1px solid var(--line);border-radius:10px;padding:4px 2px;text-align:center;font-size:13px;min-width:0}
+.day.has{border-color:var(--zayra)}
+.day.sel{outline:2px solid var(--both)}
+.day.hollow{background:transparent;border-color:transparent}
+.day .hh{font-size:11px;color:var(--zayra);overflow-wrap:anywhere;line-height:1.1}
+.calhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.calhead h2{margin:0;font-size:26px;text-transform:capitalize;text-align:center}
+.calhead .btn{min-width:48px;padding:0}
+.entry{padding:14px;border:1px solid var(--line);border-radius:14px;margin:10px 0;background:var(--surface2)}
+.entry p{margin:6px 0 0;font-size:14px;overflow-wrap:anywhere}
+
+.bar{position:fixed;left:0;right:0;bottom:0;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.go{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;max-width:460px;margin:0 auto;min-height:64px;border:none;border-radius:32px;background:var(--c,var(--both));color:var(--on-accent);font-weight:700;font-size:17px;line-height:1.25;box-shadow:var(--shadow);padding:8px 22px;text-align:left}
+.go .pearl{width:34px;height:34px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,#fff9,transparent 48%),var(--on-accent);opacity:.9}
+.go:active:not(:disabled){transform:scale(.98)}
+.go:disabled{background:var(--surface2);color:var(--mute);box-shadow:none}
+.go:disabled .pearl{background:var(--off);opacity:1}
+.go.pulse{animation:nudge 2.2s ease-in-out infinite}
+@keyframes nudge{50%{box-shadow:0 0 0 10px color-mix(in srgb,var(--c) 22%,transparent)}}
+
+.toast{position:fixed;left:0;right:0;top:calc(10px + env(safe-area-inset-top,0px));padding:0 max(14px,env(safe-area-inset-right,0px)) 0 max(14px,env(safe-area-inset-left,0px));z-index:60;pointer-events:none}
+.tcard{pointer-events:auto;display:flex;gap:14px;align-items:flex-start;width:100%;max-width:440px;margin:0 auto;background:var(--surface);border:2px solid var(--c);border-radius:22px;padding:14px 16px;box-shadow:var(--shadow);animation:drop .5s cubic-bezier(.2,1.2,.4,1)}
+.tcard .orb{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff8,transparent 45%),var(--c);flex:none;box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 25%,transparent);animation:glow 1.6s ease-in-out infinite}
+.tcard .tb{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+.tcard b{display:block;font-size:16px;line-height:1.25}
+.tcard span{display:block;font-size:13px;color:var(--mute)}
+.tcard em{display:block;font-style:normal;font-weight:700;font-size:14px;color:var(--c)}
+.tcard .x{min-width:44px;min-height:44px;margin:-8px -10px 0 0;background:none;border:none;font-size:22px;line-height:1;color:var(--mute)}
+.toast.out .tcard{animation:lift .3s ease-in forwards}
+@keyframes drop{from{transform:translateY(-140%);opacity:0}to{transform:none;opacity:1}}
+@keyframes lift{to{transform:translateY(-140%);opacity:0}}
+@keyframes glow{50%{box-shadow:0 0 0 12px color-mix(in srgb,var(--c) 8%,transparent)}}
+
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(10,10,30,.55);display:flex;align-items:flex-end;justify-content:center}
+.sheet.top{z-index:50}
+.sheet>div{background:var(--bg);width:100%;max-width:520px;max-height:92%;overflow:auto;border-radius:24px 24px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
+.sheet h2{margin:0}
+.sheet p{margin:0;color:var(--mute);font-size:15px}
+details.set{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0 16px}
+details.set>summary{min-height:52px;display:flex;align-items:center;cursor:pointer;font-weight:700;font-size:15px}
+details.set>div{padding:0 0 16px;font-size:15px}
+details.set>div>p{margin:8px 0}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;background:var(--surface2);border-radius:12px;padding:10px 12px;overflow-wrap:anywhere;user-select:all;margin:8px 0}
+.chk{display:flex;gap:12px;align-items:flex-start;font-size:15px;font-weight:500;margin-top:12px}
+.chk input{width:24px;height:24px;flex:none;margin:0;accent-color:var(--both)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:360px){h1{font-size:34px}.people{grid-template-columns:1fr}}
+</style></head><body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow" id="eyebrow">Unidos en la fe y el amor</div>
+      <h1 id="title">Rosario de dos <span>♥</span></h1>
+    </div>
+    <button class="iconbtn" id="settingsBtn" data-a="settings" aria-label="Ajustes del rosario" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+    </button>
+  </header>
+  <div class="banner" id="banner" role="status" hidden></div>
+  <section class="mini" id="mini" aria-label="Avance del rosario" hidden></section>
+  <div class="people" id="people" hidden></div>
+  <main id="view" aria-live="polite"></main>
+</div>
+
+<div class="bar" id="bar" hidden><button class="go" id="go" data-a="done" disabled><span class="pearl" aria-hidden="true"></span><span id="golabel">Cargando…</span></button></div>
+<div class="toast" id="toast" aria-live="polite"></div>
+<div class="sheet" id="sheet" hidden><div id="sheetBody" role="dialog" aria-modal="true" aria-label="Ajustes"></div></div>
+<div class="sheet top" id="modal" hidden><div id="modalBody" role="dialog" aria-modal="true"></div></div>
+
+<script>
+var TIPOS={
+  gozosos:['La Anunciación del Ángel a María','La Visitación de María a Santa Isabel','El Nacimiento de Jesús en Belén','La Presentación de Jesús en el Templo','El Niño Jesús perdido y hallado en el Templo'],
+  luminosos:['El Bautismo de Jesús en el Jordán','Las bodas de Caná','El anuncio del Reino de Dios','La Transfiguración','La institución de la Eucaristía'],
+  dolorosos:['La oración de Jesús en el huerto','La flagelación del Señor','La coronación de espinas','Jesús con la cruz a cuestas','La crucifixión y muerte de Jesús'],
+  gloriosos:['La Resurrección del Señor','La Ascensión del Señor al cielo','La venida del Espíritu Santo','La Asunción de María al cielo','La coronación de María como Reina']
+};
+var TORDER=['gozosos','luminosos','dolorosos','gloriosos'];
+var PRAY={
+  cruz:'Por la señal de la Santa Cruz, de nuestros enemigos líbranos, Señor, Dios nuestro. En el nombre del Padre, y del Hijo, y del Espíritu Santo. Amén.',
+  abre:'Abre, Señor, mis labios,\ny mi boca proclamará tu alabanza.',
+  contri1:'Señor mío, Jesucristo, Dios y Hombre verdadero, Creador, Padre y Redentor mío, por ser tú quién eres y porque te amo sobre todas las cosas, me pesa de todo corazón haberte ofendido; propongo firmemente nunca más pecar, apartarme de todas las ocasiones de ofenderte, confesarme y cumplir la penitencia que me fuera impuesta.',
+  contri2:'Ofrezco, Señor, mi vida, obras y trabajos, en satisfacción de todos mis pecados, y así como lo suplico, así confío en tu bondad y misericordia infinita, que los perdonarás, por los méritos de tu preciosísima sangre, pasión y muerte, y me darás gracia para enmendarme y perseverar en tu santo amor y servicio, hasta el fin de mi vida. Amén.',
+  credo:'Creo en Dios, Padre todopoderoso, Creador del cielo y de la tierra. Creo en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado, descendió a los infiernos, al tercer día resucitó de entre los muertos, subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso. Desde allí ha de venir a juzgar a vivos y muertos. Creo en el Espíritu Santo, en la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna. Amén.',
+  pn1:'Padre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo.',
+  pn2:'Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación, y líbranos del mal. Amén.',
+  ave1:'Dios te salve, María, llena eres de gracia, el Señor es contigo. Bendita tú eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús.',
+  ave2:'Santa María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte. Amén.',
+  gloria:'Gloria al Padre, y al Hijo, y al Espíritu Santo. Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.',
+  jac1:'María, madre de gracia y madre de misericordia.\nEn la vida y en la muerte ampáranos gran Señora.',
+  jac2:'Oh Jesús mío, perdona nuestros pecados, líbranos del fuego del infierno, lleva al cielo a todas las almas, especialmente a las más necesitadas de tu Divina Misericordia. Amén.',
+  jac3:'Sagrado Corazón de Jesús,\nen vos confío.',
+  jac4:'Oh María, sin pecado concebida,\nrogad por nosotros que recurrimos a vos.',
+  fe1:'Dios te salve, María Santísima, Hija de Dios Padre, Virgen purísima antes del parto, en tus manos encomendamos nuestra fe para que la ilumines, llena eres de gracia, el Señor es contigo. Bendita tú eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús.',
+  fe2:'Dios te salve, María Santísima, Madre de Dios Hijo, Virgen purísima en el parto, en tus manos encomendamos nuestra esperanza para que la alientes, llena eres de gracia, el Señor es contigo. Bendita tú eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús.',
+  fe3:'Dios te salve, María Santísima, Esposa de Dios Espíritu Santo, Virgen purísima después del parto, en tus manos encomendamos nuestra caridad para que la inflames, llena eres de gracia, el Señor es contigo. Bendita tú eres entre todas las mujeres y bendito es el fruto de tu vientre, Jesús.',
+  fe4:'Dios te salve, María Santísima, Templo, trono y Sagrario de la Santísima Trinidad, Virgen concebida sin pecado original.',
+  salve:'Dios te salve, Reina y Madre de misericordia, vida, dulzura y esperanza nuestra,\nDios te salve. A ti llamamos los desterrados hijos de Eva, a ti suspiramos, gimiendo y llorando, en este valle de lágrimas.\nEa, pues, Señora abogada nuestra, vuelve a nosotros tus ojos misericordiosos,\ny después de este destierro muéstranos a Jesús,\nfruto bendito de tu vientre.\n¡Oh clemente, oh piadosa,\noh dulce siempre Virgen María! Ruega por nosotros, Santa Madre de Dios, para que seamos dignos de alcanzar las divinas gracias y promesas de nuestro Señor Jesucristo. Amén.',
+  amparo:'Bajo tu amparo nos acogemos, santa Madre de Dios; no desprecies las oraciones que te dirigimos en nuestras necesidades, antes bien líbranos de todo peligro, ¡oh Virgen gloriosa y bendita!',
+  ruega:'Ruega por nosotros, Santa Madre de Dios, para que seamos dignos de alcanzar las divinas gracias y promesas de nuestro Señor Jesucristo. Amén.',
+  oracion:'Te rogamos nos concedas,\nSeñor Dios nuestro,\ngozar de continua salud de alma y cuerpo,\ny por la gloriosa intercesión\nde la bienaventurada siempre Virgen María,\nvernos libres de las tristezas de la vida presente\ny disfrutar de las alegrías eternas.\nPor Cristo nuestro Señor.\nAmén.',
+  purisima:'Ave María Purísima,\nsin pecado original concebida.'
+};
+var RESP='Después de cada invocación, los dos responden: Ruega por nosotros.';
+var LETANIAS=[
+  ['Señor, ten piedad.\nCristo, ten piedad.\nSeñor, ten piedad.\nCristo, óyenos.\nCristo, escúchanos.'],
+  ['Dios, Padre celestial, ten piedad de nosotros.\nDios, Hijo, Redentor del mundo, ten piedad de nosotros.\nDios, Espíritu Santo, ten piedad de nosotros.\nSantísima Trinidad, un solo Dios, ten piedad de nosotros.'],
+  ['Santa María\nSanta Madre de Dios\nSanta Virgen de las Vírgenes\nMadre de Cristo\nMadre de la Iglesia\nMadre de la misericordia\nMadre de la divina gracia\nMadre de la esperanza\nMadre purísima\nMadre castísima',RESP],
+  ['Madre siempre virgen\nMadre inmaculada\nMadre amable\nMadre admirable\nMadre del buen consejo\nMadre del Creador\nMadre del Salvador',RESP],
+  ['Virgen prudentísima\nVirgen digna de veneración\nVirgen digna de alabanza\nVirgen poderosa\nVirgen clemente\nVirgen fiel',RESP],
+  ['Espejo de justicia\nTrono de la sabiduría\nCausa de nuestra alegría\nVaso espiritual\nVaso digno de honor\nVaso de insigne devoción\nRosa mística',RESP],
+  ['Torre de David\nTorre de marfil\nCasa de oro\nArca de la Alianza\nPuerta del cielo\nEstrella de la mañana',RESP],
+  ['Salud de los enfermos\nRefugio de los pecadores\nConsuelo de los migrantes\nConsoladora de los afligidos\nAuxilio de los cristianos',RESP],
+  ['Reina de los Ángeles\nReina de los Patriarcas\nReina de los Profetas\nReina de los Apóstoles\nReina de los Mártires\nReina de los Confesores\nReina de las Vírgenes\nReina de todos los Santos',RESP],
+  ['Reina concebida sin pecado original\nReina asunta a los Cielos\nReina del Santísimo Rosario\nReina de la familia\nReina de la paz',RESP],
+  ['Cordero de Dios, que quitas el pecado del mundo, perdónanos, Señor.\nCordero de Dios, que quitas el pecado del mundo, escúchanos, Señor.\nCordero de Dios, que quitas el pecado del mundo, ten misericordia de nosotros.']
+];
+
+const REFLEXIONES={
+ gozosos:[
+ ['Lucas 1:38','Entonces María dijo: He aquí la sierva del Señor; hágase conmigo conforme á tu palabra. Y el ángel se fué de ella.','El amor comienza cuando abrimos el corazón a una misión que supera nuestros propios planes. María dijo sí sin tener todas las respuestas.','Como pareja podemos aprender a escucharnos antes de decidir. Que nuestras promesas sean actos libres de confianza y no palabras apresuradas.'],
+ ['Lucas 1:42','Y exclamó á gran voz, y dijo: Bendita tú entre las mujeres, y bendito el fruto de tu vientre.','María fue al encuentro de Isabel llevando una presencia que alegraba la casa. El cariño también se expresa llegando, acompañando y sirviendo.','Cuando uno de nosotros se sienta cansado, que el otro sepa hacerse cercano. Amar no siempre significa resolver: muchas veces basta con permanecer.'],
+ ['Lucas 2:7','Y parió á su hijo primogénito, y le envolvió en pañales, y acostóle en un pesebre; porque no había lugar para ellos en el mesón.','Dios entró en el mundo por el camino de lo humilde. Lo más valioso no siempre llega rodeado de comodidad o certezas.','Que nuestra relación encuentre alegría también en los días sencillos y difíciles. Aprendamos a construir hogar con ternura, gratitud y paciencia.'],
+ ['Lucas 2:32','Luz para ser revelada á los Gentiles, Y la gloria de tu pueblo Israel.','María y José presentaron a Jesús en el Templo: el amor reconoce que la vida es un regalo que debe cuidarse y ofrecerse.','Presentemos a Dios nuestras decisiones, trabajo y proyectos. Que ninguno use el amor para poseer al otro, sino para acompañarlo a crecer.'],
+ ['Lucas 2:49','Entonces él les dice: ¿Qué hay que me buscabais? ¿No sabíais que en los negocios de mi Padre me conviene estar?','Buscar a Jesús recuerda que incluso cuando amamos mucho, podemos sentirnos perdidos y necesitar volver a encontrar el rumbo.','Si hay distancia o malentendidos, que no nos gane el orgullo. Preguntemos, escuchemos y regresemos al diálogo con humildad.']],
+ luminosos:[
+ ['Mateo 3:17','Y he aquí una voz de los cielos que decía: Este es mi Hijo amado, en el cual tengo contentamiento.','El Bautismo revela una identidad sostenida por el amor. Antes de cualquier logro, Jesús es llamado Hijo amado.','Recordemos la dignidad de la persona que tenemos enfrente. Que nuestras palabras afirmen y no disminuyan la confianza del otro.'],
+ ['Juan 2:5','Su madre dice á los que servían: Haced todo lo que os dijere.','En Caná, una necesidad sencilla se vuelve ocasión de confianza y cuidado. Jesús se hace presente en una celebración humana.','Que sepamos advertir lo que al otro le falta sin esperar a que siempre lo pida. Las pequeñas atenciones pueden transformar un día difícil.'],
+ ['Marcos 1:15','Y diciendo: El tiempo es cumplido, y el reino de Dios está cerca: arrepentíos, y creed al evangelio.','El Reino de Dios invita a cambiar de vida, no solo a sentir cosas bonitas. El amor crece cuando reconoce sus errores.','Pidamos la valentía de pedir perdón y la generosidad de perdonar. Cada cambio auténtico abre espacio para una relación más sana.'],
+ ['Marcos 9:7','Y vino una nube que les hizo sombra, y una voz de la nube, que decía: Este es mi Hijo amado: á él oíd.','En la Transfiguración, la voz del Padre pide escuchar a Jesús. Contemplar la luz también prepara para caminar por momentos oscuros.','Escuchémonos de verdad, incluso cuando la verdad resulte incómoda. Que la fe nos ayude a no escapar de las pruebas.'],
+ ['Lucas 22:19','Y tomando el pan, habiendo dado gracias, partió, y les dió, diciendo: Esto es mi cuerpo, que por vosotros es dado: haced esto en memoria de mí.','La Eucaristía expresa entrega y memoria: amar es ofrecerse sin reducir al otro a nuestras necesidades.','Que compartamos tiempo, esfuerzo y presencia con alegría. La fidelidad crece en decisiones pequeñas repetidas cada día.']],
+ dolorosos:[
+ ['Lucas 22:42','Diciendo: Padre, si quieres, pasa este vaso de mí; empero no se haga mi voluntad, sino la tuya.','En Getsemaní, Jesús no oculta su angustia. La confianza en Dios puede convivir con el miedo y el cansancio.','Que podamos expresar lo que duele sin vergüenza. Amar también es acompañarnos cuando no existen respuestas fáciles.'],
+ ['Isaías 53:5','Mas él herido fué por nuestras rebeliones, molido por nuestros pecados: el castigo de nuestra paz sobre él; y por su llaga fuimos nosotros curados.','La flagelación nos obliga a mirar el sufrimiento con respeto. Nunca deberíamos acostumbrarnos a la humillación ajena.','Que en nuestra relación no tengan lugar las palabras crueles ni el desprecio. Aprendamos a reparar el dolor que podamos causar.'],
+ ['Mateo 27:29','Y pusieron sobre su cabeza una corona tejida de espinas, y una caña en su mano derecha; é hincando la rodilla delante de él, le escarnecían, diciendo: ¡Salve, Rey de los Judíos!','La coronación de espinas muestra cómo la burla hiere la dignidad. Jesús soporta el desprecio sin devolverlo como violencia.','Que no hagamos de las debilidades del otro un motivo de humillación. Cuidemos nuestro lenguaje, especialmente en medio del enojo.'],
+ ['Lucas 23:26','Y llevándole, tomaron á un Simón, Cireneo, que venía del campo, y le pusieron encima la cruz para que la llevase tras Jesús.','En el camino de la cruz aparece alguien que ayuda a sostener el peso. Nadie debería tener que cargarlo todo a solas.','Preguntémonos cómo aliviar hoy una carga concreta de nuestra pareja. A veces el apoyo más profundo es práctico y silencioso.'],
+ ['Lucas 23:34','Y Jesús decía: Padre, perdónalos, porque no saben lo que hacen. Y partiendo sus vestidos, echaron suertes.','En la cruz, Jesús responde al daño con una petición de perdón. Es una forma exigente de amor que no justifica la injusticia.','Que aprendamos a distinguir el perdón de permitir el maltrato. Cuidemos límites sanos y busquemos siempre la reconciliación verdadera.']],
+ gloriosos:[
+ ['Mateo 28:6','No está aquí; porque ha resucitado, como dijo. Venid, ved el lugar donde fué puesto el Señor.','La Resurrección recuerda que el sufrimiento no tiene la última palabra. La esperanza se abre paso donde parecía terminar el camino.','Cuando tengamos dificultades, que no definamos nuestra historia por un solo mal día. El amor también puede recomenzar.'],
+ ['Hechos 1:9','Y habiendo dicho estas cosas, viéndolo ellos, fué alzado; y una nube le recibió y le quitó de sus ojos.','La Ascensión invita a confiar aun sin ver. La ausencia física no destruye el vínculo de quienes comparten una misión.','Cuando estemos lejos, cuidemos nuestra comunicación y nuestras promesas. La confianza se alimenta de presencia sincera, aun a distancia.'],
+ ['Hechos 2:4','Y fueron todos llenos del Espíritu Santo, y comenzaron á hablar en otras lenguas, como el Espíritu les daba que hablasen.','Pentecostés convierte el miedo en testimonio y abre caminos de entendimiento entre personas diferentes.','Pidamos palabras que construyan puentes. Que sepamos explicarnos sin gritar y comprendernos sin exigir ser idénticos.'],
+ ['Lucas 1:48','Porque ha mirado á la bajeza de su criada; Porque he aquí, desde ahora me dirán bienaventurada todas las generaciones.','La tradición de la Asunción contempla la plenitud de la vida de María junto a Dios. Su canto reconoce la grandeza que nace de la humildad.','Que soñemos juntos sin olvidar lo esencial. Nuestra meta no es aparentar perfección, sino caminar hacia una vida más plena y generosa.'],
+ ['Apocalipsis 12:1','Y una grande señal apareció en el cielo: una mujer vestida del sol, y la luna debajo de sus pies, y sobre su cabeza una corona de doce estrellas.','La tradición contempla en esta imagen la victoria de Dios y el cuidado maternal de María. La verdadera grandeza no depende del poder mundano.','Que construyamos una relación donde reinen la bondad, el respeto y el servicio. Pidamos a María que nos ayude a permanecer fieles.']]
+};
+
+/* =====================================================================
+   Rosario de dos. Sala cifrada de extremo a extremo (AES-GCM) sobre ntfy.sh.
+   Sin servidor propio. La clave sale de la "semilla" de la sala; los avisos
+   al celular viajan aparte, por temas ntfy individuales.
+   ===================================================================== */
+(()=>{'use strict';
+
+/* ---------- utilidades ---------- */
+const $=s=>document.querySelector(s);
+const NAMES={i:'Isaac',z:'Zayra'},other=w=>w==='i'?'z':'i';
+const ORD=['1.º','2.º','3.º','4.º','5.º'];
+const todayType=()=>[3,0,2,3,1,2,0][new Date().getDay()];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>{try{return crypto.randomUUID()}catch(e){return 'id-'+Math.random().toString(36).slice(2)+Date.now()}};
+const rand48=()=>{const a=new Uint8Array(24);crypto.getRandomValues(a);return Array.from(a,b=>b.toString(16).padStart(2,'0')).join('')};
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const read=(k,d)=>{try{const x=JSON.parse(localStorage.getItem(k));return x==null?d:x}catch(e){return d}};
+const rawGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const rawSet=(k,v)=>{try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}};
+const colorOf=w=>w==='i'?'var(--isaac)':w==='z'?'var(--zayra)':'var(--both)';
+
+/* ---------- todas las partes del rosario, en orden ----------
+   o = 'a' (quien empieza), 'b' (la otra persona) o 'x' (las dos personas, cada una completa) */
+const PARTS=[],SECS=[];
+(function(){
+  function add(sec,d,o,title,short,body){PARTS.push({sec,d,o,title,short,body})}
+  function aves(count,sec,d,tags){
+    for(let a=1;a<=count;a++){
+      const tg=tags?' · '+tags[a-1][0]:'';
+      add(sec,d,'a','Dios te salve · Ave María '+a+' de '+count+tg,'el «Dios te salve» del Ave '+a,[tags?tags[a-1][1]:PRAY.ave1]);
+      add(sec,d,'b','Santa María · Ave María '+a+' de '+count+tg,'el «Santa María» del Ave '+a,[PRAY.ave2]);
+    }
+  }
+  function section(key,d,big,fn){const start=PARTS.length;fn();SECS.push({key,d,start,len:PARTS.length-start,big})}
+  function pn(sec,d,pre){
+    add(sec,d,'a',pre+'Padre Nuestro · primera parte','la primera parte del Padre Nuestro',[PRAY.pn1]);
+    add(sec,d,'b',pre+'Padre Nuestro · segunda parte','la segunda parte del Padre Nuestro',[PRAY.pn2]);
+  }
+  section('open',-1,[0,2],()=>{
+    add('open',-1,'x','Señal de la cruz','la Señal de la cruz',[PRAY.cruz,PRAY.abre]);
+    add('open',-1,'x','Acto de contrición','el acto de contrición',[PRAY.contri1,PRAY.contri2]);
+    add('open',-1,'x','Credo','el Credo',[PRAY.credo]);
+    pn('open',-1,'');
+    add('open',-1,'x','Gloria','el Gloria',[PRAY.gloria]);
+  });
+  for(let d=0;d<5;d++)section('dec',d,[0,11],()=>{
+    pn('dec',d,'');aves(10,'dec',d,null);
+    add('dec',d,'x','Gloria','el Gloria',[PRAY.gloria]);
+    add('dec',d,'x','Jaculatorias','las jaculatorias',[PRAY.jac1,PRAY.jac2,PRAY.jac3,PRAY.jac4]);
+  });
+  section('fe',-1,[3],()=>{
+    aves(3,'fe',-1,[['por la fe',PRAY.fe1],['por la esperanza',PRAY.fe2],['por la caridad',PRAY.fe3]]);
+    add('fe',-1,'x','Dios te salve · Templo de la Santísima Trinidad','el «Dios te salve» final',[PRAY.fe4]);
+  });
+  section('close',-1,[0,5,10],()=>{
+    add('close',-1,'x','Salve','la Salve',[PRAY.salve]);
+    LETANIAS.forEach((b,i)=>add('close',-1,i%2===0?'b':'a','Letanías · '+(i+1)+' de '+LETANIAS.length,'las Letanías ('+(i+1)+' de '+LETANIAS.length+')',b));
+    add('close',-1,'x','Bajo tu amparo','el «Bajo tu amparo»',[PRAY.amparo]);
+    add('close',-1,'x','Ruega por nosotros','el «Ruega por nosotros»',[PRAY.ruega]);
+    pn('close',-1,'Intenciones del Papa · ');
+    add('close',-1,'a','Intenciones del Papa · Dios te salve','el «Dios te salve» por el Papa',[PRAY.ave1]);
+    add('close',-1,'b','Intenciones del Papa · Santa María','el «Santa María» por el Papa',[PRAY.ave2]);
+    add('close',-1,'x','Intenciones del Papa · Gloria','el Gloria por el Papa',[PRAY.gloria]);
+    add('close',-1,'x','Oración final','la oración final',[PRAY.oracion]);
+    add('close',-1,'x','Ave María Purísima','el «Ave María Purísima»',[PRAY.purisima]);
+    add('close',-1,'x','Señal de la cruz','la Señal de la cruz final',[PRAY.cruz]);
+  });
+})();
+const TOTAL=PARTS.length;
+const secOf=i=>{for(const s of SECS)if(i>=s.start&&i<s.start+s.len)return s;return SECS[SECS.length-1]};
+
+const offeringText='Señor, Dios nuestro, ponemos en tus manos este Santo Rosario. Recibe nuestra oración, nuestras alegrías y preocupaciones, y las intenciones que hoy compartimos. Por intercesión de la Santísima Virgen María, ayúdanos a crecer en la fe, la esperanza, la caridad y el amor verdadero. Amén.';
+const finishText='Señor, gracias por permitirnos encontrarnos en la oración, incluso cuando la distancia nos separa. Bendice a Isaac y Zayra; fortalece nuestro amor, enséñanos a escucharnos y ayúdanos a caminar unidos hacia Ti. María, Madre nuestra, acompáñanos siempre. Amén.';
+
+/* ---------- sala, almacenamiento y estado ---------- */
+const SEEDKEY='rdd-seed',DEFAULT_SEED='3fef0d217d9d609fb99ed55f3730c6d3558b58ef850dfcbd',HEX48=/^[0-9a-f]{48}$/;
+const seed=(()=>{
+  let h=null;try{h=new URLSearchParams(location.hash.slice(1)).get('s')}catch(e){}
+  if(h&&HEX48.test(h)){rawSet(SEEDKEY,h);return h}
+  const s=rawGet(SEEDKEY);return s&&HEX48.test(s)?s:DEFAULT_SEED;
+})();
+const room='rdd-'+seed.slice(0,22),prefix='rdd-v4-'+seed.slice(0,22)+'-';
+const pushTopic=w=>room+'-aviso-'+(w==='i'?'1':'2');
+
+let my=read(prefix+'me',null);if(my!=='i'&&my!=='z')my=null;
+let settings=Object.assign({theme:'auto',font:21,push:true,local:false},read(prefix+'settings',{}));
+let historyItems=read(prefix+'history',[]),deleted=read(prefix+'deleted',{}),privateInt=read(prefix+'private',{}),seen=read(prefix+'seen',[]);
+const blank=()=>({phase:'welcome',proposal:null,session:null,mystery:todayType(),confirmed:{i:false,z:false},change:null,commits:{i:false,z:false},intents:{i:null,z:null},revealReady:{i:false,z:false},offeringReady:{i:false,z:false},step:0,stepDone:{i:false,z:false},starter:'i',startedAt:null,endedAt:null,undo:null,updatedAt:0});
+let state=read(prefix+'state',null)||blank();
+
+let screen='home',month=new Date(),selDay=null,draft=null;
+let online=false,localMode=!!settings.local,source=null,heartbeat=null,key=null,inFlight=false;
+let connectionError='',pushError=null,requestModal=null,changeOpen=false,reflexOpen={},lastMystery=-1,toastTimer=null,snapshotDelay=null;
+const lastPeer={i:0,z:0};
+
+function save(){
+  store(prefix+'state',state);store(prefix+'private',privateInt);store(prefix+'history',historyItems);
+  store(prefix+'deleted',deleted);store(prefix+'settings',settings);store(prefix+'seen',seen.slice(-900));
+}
+function applySettings(){
+  const r=document.documentElement;
+  if(settings.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',settings.theme);
+  r.style.setProperty('--size',settings.font+'px');
+}
+applySettings();
+
+/* ---------- cifrado ---------- */
+async function derive(){
+  const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(seed));
+  key=await crypto.subtle.importKey('raw',digest,'AES-GCM',false,['encrypt','decrypt']);
+}
+const b64=a=>btoa(String.fromCharCode(...a)),unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function encrypt(data){
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify(data))));
+  return JSON.stringify({v:1,iv:b64(iv),ct:b64(ct)});
+}
+async function decrypt(s){
+  const x=JSON.parse(s);if(x.v!==1)return null;
+  return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(x.iv)},key,unb64(x.ct))));
+}
+
+/* ---------- red ---------- */
+const canAct=()=>online||localMode;
+function showError(msg){connectionError=msg;renderBanner()}
+async function publishWire(ev){
+  const body=await encrypt(ev);
+  const res=await fetch('https://ntfy.sh/'+room,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
+  if(!res.ok)throw Error('ntfy respondió '+res.status);
+}
+async function send(kind,data){
+  if(!my)return false;
+  const ev={id:uid(),session:state.session?state.session.id:'',from:my,kind,data:data||{},time:Date.now()};
+  if(localMode){acceptEvent(ev);return true}
+  if(!online){showError('Sin conexión: puedes leer la oración, pero no avanzar hasta reconectar.');return false}
+  try{await publishWire(ev);connectionError='';acceptEvent(ev);return true}
+  catch(err){showError('No se pudo sincronizar: '+err.message);return false}
+}
+async function sendAndWait(kind,data){
+  if(inFlight)return false;
+  inFlight=true;render();
+  try{return await send(kind,data)}finally{inFlight=false;render()}
+}
+const peerOnline=w=>localMode?true:(w===my?online:Date.now()-lastPeer[w]<75000);
+
+async function pushTo(to,title,message){
+  const payload={topic:pushTopic(to),title,message,priority:4,tags:['heart']};
+  try{
+    const r=await fetch('https://ntfy.sh/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    if(!r.ok)throw Error('HTTP '+r.status);
+    pushError=null;renderBanner();
+  }catch(e){pushError=payload;renderBanner()}
+}
+async function pushPartner(message,force){
+  if(!my||localMode||!settings.push)return;
+  if(!force&&peerOnline(other(my)))return;
+  await pushTo(other(my),'Rosario de dos ❤️',message);
+}
+async function pushIntentions(){
+  if(!my||localMode||!state.intents.i||!state.intents.z)return;
+  await pushTo(other(my),'Nuestras intenciones ❤️','Isaac: '+state.intents.i+'\nZayra: '+state.intents.z);
+}
+
+function connect(){
+  if(source){source.close();source=null}
+  clearInterval(heartbeat);heartbeat=null;
+  if(localMode||!key)return;
+  source=new EventSource('https://ntfy.sh/'+room+'/sse?since=all');
+  source.onopen=()=>{online=true;connectionError='';render();if(my){send('hello');send('syncAsk')}maybeReveal()};
+  source.onmessage=e=>onWire(e.data);
+  source.onerror=()=>{online=false;render();if(source&&source.readyState===2)setTimeout(connect,4000)};
+  heartbeat=setInterval(()=>{if(my&&online)send('hello');renderPeople()},25000);
+}
+async function onWire(data){
+  try{
+    const item=JSON.parse(data);
+    if(item.event!=='message'||!item.message)return;
+    const ev=await decrypt(item.message);
+    if(ev&&ev.kind)acceptEvent(ev,item.time?item.time*1000:0);
+  }catch(e){/* mensajes que no pertenecen a la sala cifrada */}
+}
+
+/* ---------- avance del rosario ---------- */
+const turnOwner=p=>p.o==='x'?'x':(p.o==='a'?state.starter:other(state.starter));
+const ownerOf=i=>turnOwner(PARTS[i]);
+function advance(){
+  while(state.step<TOTAL){
+    const owner=turnOwner(PARTS[state.step]);
+    if(owner==='x'){if(!state.stepDone.i||!state.stepDone.z)break}
+    else if(!state.stepDone[owner])break;
+    state.step++;state.stepDone={i:false,z:false};
+  }
+  if(state.step>=TOTAL&&state.phase==='prayer'){state.phase='finished';state.endedAt=new Date().toISOString();addHistory()}
+}
+function addHistory(){
+  const s=state.session;
+  if(!s||historyItems.some(h=>h.id===s.id)||deleted[s.id])return;
+  historyItems.push({id:s.id,date:state.startedAt||new Date().toISOString(),end:state.endedAt||new Date().toISOString(),mystery:state.mystery,starter:state.starter,intents:Object.assign({},state.intents)});
+  save();
+}
+function mergeHistory(items){
+  let n=0;
+  for(const h of items||[]){
+    if(!h||typeof h.id!=='string'||deleted[h.id]||historyItems.some(a=>a.id===h.id))continue;
+    historyItems.push(h);n++;
+  }
+  save();return n;
+}
+const progress=()=>state.phase==='finished'?TOTAL:(state.phase==='prayer'?state.step:0);
+const myTurnNow=()=>{
+  if(state.phase!=='prayer'||state.step>=TOTAL)return false;
+  const o=turnOwner(PARTS[state.step]);
+  return o==='x'?!state.stepDone[my]:o===my;
+};
+
+function acceptEvent(ev,srv){
+  if(!ev||!ev.kind||seen.includes(ev.id)||(ev.from!=='i'&&ev.from!=='z'))return;
+  seen.push(ev.id);if(seen.length>900)seen=seen.slice(-900);
+  const t=srv||ev.time||Date.now();
+  lastPeer[ev.from]=Math.max(lastPeer[ev.from]||0,Math.min(t,Date.now()));
+  const live=!srv||Date.now()-srv<45000;
+  const sid=state.session?state.session.id:null;
+  const evPart=(ev.kind==='done'&&state.phase==='prayer'&&state.step<TOTAL)?PARTS[state.step]:null;
+  const stepBefore=state.step,doneBefore=!!state.stepDone[ev.from];
+  switch(ev.kind){
+  case'hello':save();renderPeople();return;
+  case'syncAsk':if(ev.from!==my&&(state.session||state.proposal))queueSnapshot();break;
+  case'snapshot':
+    if(ev.data&&ev.data.state&&ev.data.state.updatedAt>state.updatedAt+600){state=ev.data.state;mergeHistory((ev.data.history||[]).filter(x=>!deleted[x.id]))}
+    break;
+  case'propose':if(state.phase==='welcome'&&!state.proposal)state.proposal={by:ev.from,id:ev.data.id,starter:ev.data.starter,created:ev.time};break;
+  case'cancel':case'decline':if(state.phase==='welcome'&&state.proposal&&state.proposal.id===ev.data.id)state.proposal=null;break;
+  case'accept':
+    if(state.phase==='welcome'&&state.proposal&&state.proposal.id===ev.data.id){
+      const p=state.proposal;state=blank();state.session={id:p.id};state.phase='mysteries';state.starter=p.starter;state.mystery=todayType();draft=null;
+    }
+    break;
+  case'mysteryApprove':
+    if(state.phase==='mysteries'&&!state.change&&ev.session===sid){state.confirmed[ev.from]=true;if(state.confirmed.i&&state.confirmed.z)state.phase='intent'}
+    break;
+  case'changeRequest':if(state.phase==='mysteries'&&ev.session===sid)state.change={by:ev.from,type:ev.data.type};break;
+  case'changeDecision':
+    if(state.phase==='mysteries'&&state.change&&ev.session===sid){
+      if(ev.data.accept){state.mystery=state.change.type;state.confirmed={i:false,z:false}}
+      state.change=null;
+    }
+    break;
+  case'intentCommit':if(state.phase==='intent'&&ev.session===sid){state.commits[ev.from]=true;setTimeout(maybeReveal,550)}break;
+  case'intentReveal':
+    if(['intent','reveal'].includes(state.phase)&&ev.session===sid&&state.commits.i&&state.commits.z){
+      state.intents[ev.from]=String(ev.data.text||'');
+      if(state.intents.i!==null&&state.intents.z!==null){
+        state.phase='reveal';
+        if(!state._intentNotified){state._intentNotified=true;if(my==='i')pushIntentions()}
+      }
+    }
+    break;
+  case'revealNext':if(state.phase==='reveal'&&ev.session===sid){state.revealReady[ev.from]=true;if(state.revealReady.i&&state.revealReady.z)state.phase='offering'}break;
+  case'offeringNext':
+    if(state.phase==='offering'&&ev.session===sid){
+      state.offeringReady[ev.from]=true;
+      if(state.offeringReady.i&&state.offeringReady.z){state.phase='prayer';state.startedAt=new Date().toISOString();state.step=0;state.stepDone={i:false,z:false};advance()}
+    }
+    break;
+  case'done':
+    if(state.phase==='prayer'&&ev.session===sid&&ev.data.step===state.step){
+      const o=turnOwner(PARTS[state.step]);
+      if(o==='x'||o===ev.from){state.stepDone[ev.from]=true;advance()}
+    }
+    break;
+  case'undoAsk':if(state.phase==='prayer'&&ev.session===sid)state.undo={by:ev.from,step:ev.data.step};break;
+  case'undoDecision':
+    if(state.phase==='prayer'&&state.undo&&ev.session===sid){
+      if(ev.data.accept){state.step=Math.max(0,state.undo.step);state.stepDone={i:false,z:false}}
+      state.undo=null;
+    }
+    break;
+  case'newFromFinished':if(state.phase==='finished'){state=blank();draft=null}break;
+  case'historyRequest':if(ev.from!==my&&my&&historyItems.length)requestModal={type:'transfer',from:ev.from};break;
+  case'historyTransfer':if(ev.data.to===my){const n=mergeHistory(ev.data.items);notice('Se recuperaron '+n+' registros del historial.')}break;
+  case'deleteAsk':if(ev.from!==my)requestModal={type:'delete',id:ev.data.id,from:ev.from};break;
+  case'deleteApprove':deleted[ev.data.id]=true;historyItems=historyItems.filter(h=>h.id!==ev.data.id);if(requestModal&&requestModal.id===ev.data.id)requestModal=null;break;
+  case'deleteReject':if(requestModal&&requestModal.id===ev.data.id)requestModal=null;break;
+  }
+  if(state.phase!=='intent'&&screen==='edit')screen='home';
+  if(ev.kind==='syncAsk'){save()}else{state.updatedAt=Date.now();save()}
+
+  /* aviso en pantalla cuando tu pareja avanza con la página abierta */
+  if(evPart&&ev.from!==my&&live&&(state.step!==stepBefore||(state.stepDone[ev.from]&&!doneBefore)||state.phase==='finished')){
+    const sec=secOf(stepBefore);
+    const where=sec.key==='open'?'Oraciones iniciales':sec.key==='close'?'Oraciones finales':sec.key==='fe'?'Fe, esperanza y caridad':ORD[sec.d]+' misterio · '+TIPOS[TORDER[state.mystery]][sec.d];
+    const turn=myTurnNow()?'<em>Te toca: '+esc(PARTS[state.step].title)+'</em>':'';
+    toast(colorOf(ev.from),'<b>'+esc(NAMES[ev.from])+' rezó '+esc(evPart.short)+'</b><span>'+esc(where)+'</span>'+turn,turn?12000:7000);
+    try{navigator.vibrate&&navigator.vibrate([30,60,30])}catch(e){}
+  }
+  render();
+}
+function queueSnapshot(){clearTimeout(snapshotDelay);snapshotDelay=setTimeout(()=>{send('snapshot',{state,history:[]})},400)}
+async function maybeReveal(){
+  if(!my||state.phase!=='intent'||!state.commits.i||!state.commits.z||state.intents[my]!==null)return;
+  const txt=privateInt[state.session&&state.session.id]&&privateInt[state.session.id][my];
+  if(!txt||!canAct())return;
+  await send('intentReveal',{text:txt});
+}
+
+/* ---------- dibujo: hilo de cuentas ---------- */
+function ringColor(){
+  if(state.phase==='prayer'&&state.step<TOTAL)return colorOf(turnOwner(PARTS[state.step]));
+  return 'var(--both)';
+}
+const clsOf=(i,nx)=>i>=nx?'hb':'hb '+(ownerOf(i)==='x'?'both':ownerOf(i));
+function strand(s,nx){
+  const W=340,H=126,nb=Math.ceil(s.len/2),pts=[];let svg='',path='';
+  for(let k=0;k<nb;k++){const t=nb>1?k/(nb-1):.5;pts.push([20+t*(W-40),20+78*(1-Math.pow(2*t-1,2))])}
+  pts.forEach((p,j)=>{path+=(j?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)});
+  svg+='<path class="cord" d="'+path+'"/>';
+  pts.forEach((p,j)=>{
+    const x=p[0],y=p[1],r=s.big.indexOf(j)>=0?11.5:8.5,l=s.start+2*j,rr=l+1,xs=x.toFixed(1);
+    if(rr>=s.start+s.len){svg+='<circle class="'+clsOf(l,nx)+'" cx="'+xs+'" cy="'+y.toFixed(1)+'" r="'+r+'"/>';return}
+    svg+='<path class="'+clsOf(l,nx)+'" d="M'+xs+' '+(y-r).toFixed(1)+'A'+r+' '+r+' 0 0 0 '+xs+' '+(y+r).toFixed(1)+'Z"/>';
+    svg+='<path class="'+clsOf(rr,nx)+'" d="M'+xs+' '+(y-r).toFixed(1)+'A'+r+' '+r+' 0 0 1 '+xs+' '+(y+r).toFixed(1)+'Z"/>';
+    svg+='<line x1="'+xs+'" y1="'+(y-r).toFixed(1)+'" x2="'+xs+'" y2="'+(y+r).toFixed(1)+'" stroke="var(--surface)" stroke-width="1.2"/>';
+  });
+  if(nx<TOTAL&&secOf(nx)===s){
+    const bk=Math.floor((nx-s.start)/2),p2=pts[bk],big=s.big.indexOf(bk)>=0;
+    svg+='<circle class="ring" style="--c:'+ringColor()+'" cx="'+p2[0].toFixed(1)+'" cy="'+p2[1].toFixed(1)+'" r="'+(big?15:12.5)+'"/>';
+  }
+  return '<svg class="strand" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Parte del rosario en curso">'+svg+'</svg>';
+}
+
+/* ---------- dibujo: rosario en forma de corazón ---------- */
+let HEART=null;
+function heartTable(){
+  /* corazón con dos lóbulos circulares, un valle redondeado arriba y dos lados rectos que bajan juntos hasta la medalla */
+  if(HEART)return HEART;
+  const r=44,rho=6,cxo=36,cyo=64,tipY=190,raw=[];let i,n;
+  const psi=Math.atan2(tipY-cyo,-cxo),dist=Math.hypot(cxo,tipY-cyo),b0=psi-Math.acos(r/dist);
+  const yF=cyo-Math.sqrt((r+rho)*(r+rho)-cxo*cxo),gam=Math.atan2(yF-cyo,-cxo);
+  const phiR=Math.atan2(cyo-yF,cxo),gl0=Math.atan2(yF-cyo,cxo),gl1=Math.PI-b0-2*Math.PI;
+  const tpx=cxo+r*Math.cos(b0),tpy=cyo+r*Math.sin(b0);
+  for(i=0;i<=80;i++)raw.push([tpx*i/80,tipY+(tpy-tipY)*i/80]);
+  for(i=1;i<=240;i++){const a1=b0+(gam-b0)*i/240;raw.push([cxo+r*Math.cos(a1),cyo+r*Math.sin(a1)])}
+  for(i=1;i<=24;i++){const a2=phiR+(Math.PI-2*phiR)*i/24;raw.push([rho*Math.cos(a2),yF+rho*Math.sin(a2)])}
+  for(i=1;i<=240;i++){const a3=gl0+(gl1-gl0)*i/240;raw.push([-cxo+r*Math.cos(a3),cyo+r*Math.sin(a3)])}
+  for(i=1;i<=80;i++)raw.push([-tpx+tpx*i/80,tpy+(tipY-tpy)*i/80]);
+  const pts=raw.map(q=>[100+q[0],10+(q[1]-(cyo-r))]),cum=[0];
+  n=pts.length-1;
+  for(i=1;i<=n;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+  HEART={pts,cum,total:cum[n],N:n};
+  return HEART;
+}
+function heartAt(fr){
+  const H=heartTable(),d=Math.max(0,Math.min(1,fr))*H.total;let i=0;
+  while(i<H.N-1&&H.cum[i+1]<d)i++;
+  const seg=H.cum[i+1]-H.cum[i]||1,u=(d-H.cum[i])/seg,a=H.pts[i],b=H.pts[i+1],dx=b[0]-a[0],dy=b[1]-a[1],len=Math.hypot(dx,dy)||1;
+  return {x:a[0]+dx*u,y:a[1]+dy*u,ux:dx/len,uy:dy/len};
+}
+function miniRosary(){
+  /* medalla en la punta; 4 cuentas grandes en el lazo y una bajo la medalla; 50 cuentas pequeñas (5 decenas);
+     tira con cuenta grande, 3 pequeñas (fe, esperanza y caridad), cuenta grande y crucifijo. */
+  const nx=progress(),cur=(state.phase==='prayer'&&state.step<TOTAL)?state.step:-1,rc=ringColor();
+  let g='',rings='';
+  const f=v=>v.toFixed(1),H=heartTable(),ty=H.pts[0][1],cx=100;
+  const col=idx=>idx>=nx?'':' '+(ownerOf(idx)==='x'?'both':ownerOf(idx));
+  const ringAt=(x,y,r)=>{rings+='<circle class="ring" style="--c:'+rc+'" cx="'+f(x)+'" cy="'+f(y)+'" r="'+f(r)+'"/>'};
+  function bead(x,y,r,ux,uy,parts){
+    const th=Math.atan2(-ux,uy)*180/Math.PI,n=parts.length;let h='';
+    if(parts.indexOf(cur)>=0)ringAt(x,y,r+2.6);
+    for(let i=0;i<n;i++){
+      if(n===1){h+='<circle class="hb'+col(parts[0])+'" r="'+r+'"/>';break}
+      const a1=Math.PI+i*2*Math.PI/n,a2=Math.PI+(i+1)*2*Math.PI/n;
+      h+='<path class="hb'+col(parts[i])+'" d="M0 0L'+f(r*Math.cos(a1))+' '+f(r*Math.sin(a1))+'A'+r+' '+r+' 0 0 1 '+f(r*Math.cos(a2))+' '+f(r*Math.sin(a2))+'Z"/>';
+    }
+    return '<g transform="translate('+f(x)+' '+f(y)+') rotate('+f(th)+')">'+h+'</g>';
+  }
+  const st=d=>SECS[1+d].start,fs=SECS[6].start,A=[0,.2,.4,.6,.8,1];
+  g+='<path d="M'+H.pts.filter((_,k)=>k%4===0).map(q=>f(q[0])+' '+f(q[1])).join('L')+'Z" fill="none" stroke="var(--off)" stroke-width="1.2" stroke-linejoin="round"/>';
+  g+='<line x1="'+cx+'" y1="'+f(ty)+'" x2="'+cx+'" y2="'+f(ty+82)+'" stroke="var(--off)" stroke-width="1.2"/>';
+  for(let d=0;d<5;d++)for(let i=1;i<=10;i++){
+    const P=heartAt(A[d]+(A[d+1]-A[d])*i/11),l=st(d)+2*i;
+    g+=bead(P.x,P.y,3,P.ux,P.uy,[l,l+1]);
+  }
+  for(let d=0;d<4;d++){const Q=heartAt(A[d+1]);g+=bead(Q.x,Q.y,5.2,Q.ux,Q.uy,[st(d)+22,st(d)+23,st(d+1),st(d+1)+1])}
+  g+=bead(cx,ty+16,5.8,0,-1,[5,st(0),st(0)+1,st(4)+22,st(4)+23]);
+  [[28,0],[39,2],[50,4]].forEach(t=>{g+=bead(cx,ty+t[0],3.2,0,-1,[fs+t[1],fs+t[1]+1])});
+  g+=bead(cx,ty+63,5.6,0,-1,[2,3,4,fs+6]);
+  g+='<rect class="hb'+col(0)+'" x="'+(cx-2)+'" y="'+f(ty+75)+'" width="4" height="30" rx="1.4"/><rect class="hb'+col(1)+'" x="'+(cx-9)+'" y="'+f(ty+83)+'" width="18" height="4" rx="1.4"/>';
+  if(cur===0||cur===1)ringAt(cx,ty+88,15);
+  const cl=SECS[SECS.length-1],frac=Math.max(0,Math.min(cl.len,nx-cl.start))/cl.len;
+  const dm='M'+cx+' '+f(ty-8)+'L'+(cx+8)+' '+f(ty)+'L'+cx+' '+f(ty+8)+'L'+(cx-8)+' '+f(ty)+'Z';
+  g+='<path d="'+dm+'" fill="var(--off)"/><path class="hb both" d="'+dm+'" fill-opacity="'+frac.toFixed(2)+'"/>';
+  if(cur>=cl.start)ringAt(cx,ty,12);
+  return '<svg viewBox="10 4 180 '+Math.ceil(ty+112)+'" role="img" aria-label="Rosario en forma de corazón: '+Math.round(nx/TOTAL*100)+' por ciento rezado">'+g+rings+'</svg>';
+}
+
+/* ---------- vistas ---------- */
+function nowLabel(){
+  const ph=state.phase;
+  if(ph==='finished')return 'Rosario completo';
+  if(ph==='prayer'){
+    const s=secOf(Math.min(state.step,TOTAL-1));
+    return s.key==='open'?'Oraciones iniciales':s.key==='close'?'Oraciones finales':s.key==='fe'?'Fe, esperanza y caridad':ORD[s.d]+' misterio';
+  }
+  if(!state.session)return state.proposal?'Invitación en curso':'Listos para comenzar';
+  return {mysteries:'Confirmando los misterios',intent:'Escribiendo intenciones',reveal:'Compartiendo intenciones',offering:'Ofrecimiento del rosario'}[ph]||'Listos para comenzar';
+}
+function renderHeader(){
+  $('#settingsBtn').hidden=!my;
+  const t=$('#title'),on=state.session&&state.phase!=='welcome';
+  if(on)t.textContent='Misterios '+TORDER[state.mystery];else t.innerHTML='Rosario de dos <span>♥</span>';
+}
+function renderMini(){
+  const m=$('#mini'),show=!!my&&screen!=='calendar'&&screen!=='edit';
+  m.hidden=!show;if(!show)return;
+  const pct=Math.round(progress()/TOTAL*100);
+  m.innerHTML=miniRosary()+'<div class="mi"><p class="pct">'+pct+'<small>%</small></p><p class="lbl">del rosario rezado</p><p class="now">'+esc(nowLabel())+'</p>'
+    +'<div class="key"><span style="--c:var(--isaac)">Isaac</span><span style="--c:var(--zayra)">Zayra</span><span style="--c:var(--both)">Juntos</span></div></div>';
+}
+function renderPeople(){
+  const p=$('#people');
+  if(!my){p.hidden=true;return}
+  p.hidden=false;
+  const inPrayer=state.phase==='prayer'&&state.step<TOTAL,turn=inPrayer?turnOwner(PARTS[state.step]):null;
+  p.innerHTML=['i','z'].map(w=>{
+    const on=peerOnline(w),isTurn=inPrayer&&(turn==='x'?!state.stepDone[w]:turn===w);
+    const txt=localMode?'En este celular':(on?'Conectad':'Desconectad')+(w==='i'?'o':'a');
+    return '<div class="person '+(w==='i'?'isaac':'zayra')+(isTurn?' turn':'')+'"><b>'+NAMES[w]+(w===my?' <small>(tú)</small>':'')+'</b><p><i class="dot'+(on?' on':'')+'"></i>'+(isTurn?(w===my?'Te toca':'Su turno'):txt)+'</p></div>';
+  }).join('');
+}
+function renderBanner(){
+  const b=$('#banner');let msg='',btn='';
+  if(localMode){msg='Modo de prueba: todo queda solo en este celular. Cambia de persona en Ajustes para rezar la parte del otro.';btn='<button data-a="local-off">Salir</button>'}
+  else if(pushError){msg='No se pudo enviar la notificación.';btn='<button data-a="retry-push">Reintentar</button>'}
+  else if(!online){msg='Sin conexión. Tu rosario está guardado. Reconectando…';btn='<button data-a="local-on">Probar en este celular</button>'}
+  else if(connectionError){msg=connectionError;btn='<button data-a="sync">Sincronizar</button>'}
+  b.hidden=!msg;b.innerHTML=msg?'<span>'+esc(msg)+'</span>'+btn:'';
+}
+const waitLine=()=>'<p class="status">Esperando a '+NAMES[other(my)]+'</p>';
+
+function identityView(){
+  return '<section class="card center"><p class="eyebrow2">Unidos en la fe y el amor</p><h2>¿Quién está entrando?</h2><p class="muted">Elige tu nombre para compartir este momento de oración.</p>'
+    +'<div class="choices"><button class="choice isaac" data-a="choose" data-who="i">Soy Isaac</button><button class="choice zayra" data-a="choose" data-who="z">Soy Zayra</button></div></section>';
+}
+function welcomeView(){
+  return '<section class="card center"><h2>Bienvenidos a su momento de oración</h2><p class="muted">Cuando estén listos, pueden comenzar un rosario juntos.</p>'
+    +'<button class="btn main full" data-a="propose">Proponer nuevo rosario</button><button class="btn full" data-a="calendar">Nuestro historial</button></section>';
+}
+function proposalView(){
+  const p=state.proposal;
+  if(!p)return welcomeView();
+  if(p.by===my)return '<section class="card center"><h2>Invitación enviada</h2><p class="muted">Esperando la respuesta de '+NAMES[other(my)]+'.</p><button class="btn full" data-a="cancel-proposal">Cancelar propuesta</button></section>';
+  return '<section class="card center"><h2>Nuevo rosario propuesto por '+NAMES[p.by]+'</h2><p class="muted">Hoy empieza '+NAMES[p.starter]+'.</p><div class="btns"><button class="btn" data-a="decline">Rechazar</button><button class="btn main" data-a="accept">Aceptar</button></div></section>';
+}
+function mysteriesView(){
+  const t=TORDER[state.mystery],ch=state.change;let act;
+  if(ch){
+    act=ch.by===my?waitLine():'<div class="note"><b>'+NAMES[ch.by]+' quiere cambiar a los misterios '+esc(TORDER[ch.type])+'.</b><div class="btns"><button class="btn" data-a="change-no">Rechazar</button><button class="btn main" data-a="change-yes">Aceptar</button></div></div>';
+  }else act=state.confirmed[my]?waitLine():'<button class="btn main full" data-a="mystery-approve">Confirmar misterios</button>';
+  return '<section class="card"><p class="eyebrow2">Paso 1 de 3</p><h2>Confirmar los misterios</h2><p class="small muted" style="margin:0">Hoy empieza '+NAMES[state.starter]+'. Se turnan las partes de cada oración.</p>'
+    +'<p class="mys">'+esc(t.charAt(0).toUpperCase()+t.slice(1))+'</p><ol class="list">'+TIPOS[t].map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>'+act
+    +'<button class="btn full" data-a="select-mystery"'+(ch?' disabled':'')+'>Solicitar cambio de misterios</button></section>';
+}
+const ownInt=()=>(privateInt[state.session&&state.session.id]||{})[my]||'';
+function intentView(){
+  if(state.commits[my])return '<section class="card center"><h2>Tu intención está guardada</h2><p class="muted">Esperando a '+NAMES[other(my)]+'.</p><p class="small">Mientras esperamos, ponemos este momento de oración en manos de Dios.</p>'
+    +'<button class="btn full" data-a="intent-edit">Editar mi intención</button><p class="privacy">Tu intención permanece privada hasta que ambos la guarden.</p></section>';
+  return '<section class="card"><p class="eyebrow2">Paso 2 de 3</p><h2>Mi intención de oración</h2><p class="muted small" style="margin:0">Escribe aquello que hoy deseas confiarle a Dios.</p>'
+    +'<label for="intentField">Mi intención personal</label><textarea id="intentField" maxlength="1200" placeholder="Señor, hoy quiero ofrecer este rosario por...">'+esc(draft!=null?draft:ownInt())+'</textarea>'
+    +'<button class="btn main full" data-a="intent-save">Guardar mi intención</button><p class="privacy">Tu pareja no podrá verla hasta que ambos hayan guardado su intención.</p></section>';
+}
+function editView(){
+  return '<section class="card"><h2>Editar mi intención</h2><label for="intentEdit">Mi intención personal</label><textarea id="intentEdit" maxlength="1200">'+esc(draft!=null?draft:ownInt())+'</textarea>'
+    +'<div class="btns"><button class="btn" data-a="edit-cancel">Descartar cambios</button><button class="btn main" data-a="edit-save">Guardar cambios</button></div></section>';
+}
+function intentCards(){
+  return '<div class="pbox isaac"><b>Intención de Isaac</b><p>'+esc(state.intents.i)+'</p></div><div class="pbox zayra"><b>Intención de Zayra</b><p>'+esc(state.intents.z)+'</p></div>';
+}
+function revealView(){
+  return '<section class="card"><h2>Nuestras intenciones</h2><p class="muted" style="margin:0">Dos corazones, una misma oración.</p>'+intentCards()
+    +(state.revealReady[my]?waitLine():'<button class="btn main full" data-a="reveal-next">Continuar</button>')+'</section>';
+}
+function offeringView(){
+  return '<section class="card"><p class="eyebrow2">Paso 3 de 3</p><h2>Ofrecimiento del Rosario</h2><div class="offer"><b>Oración de ofrecimiento</b><p class="prayer">'+esc(offeringText)+'</p></div>'+intentCards()
+    +(state.offeringReady[my]?waitLine():'<button class="btn main full" data-a="offering-next">Continuar</button>')+'</section>';
+}
+function finishView(){
+  return '<section class="card center"><h2>Gracias por rezar juntos</h2><p class="prayer">'+esc(finishText)+'</p><button class="btn main full" data-a="finished-home">Volver a la bienvenida</button><button class="btn full" data-a="calendar">Ver nuestro historial</button></section>';
+}
+function halfBox(w,tag,text,active){
+  return '<div class="half '+(w==='i'?'isaac':'zayra')+(active?' active':'')+'"><span class="tag">'+esc(NAMES[w]+' · '+tag)+'</span><p class="prayer">'+esc(text)+'</p></div>';
+}
+function prayerView(){
+  if(state.step>=TOTAL)return finishView();
+  const p=PARTS[state.step],owner=turnOwner(p),s=secOf(state.step),idx=p.d,nx=state.step;
+  const mys=idx>=0?ORD[idx]+' misterio: '+TIPOS[TORDER[state.mystery]][idx]:s.key==='open'?'Oraciones iniciales':s.key==='close'?'Oraciones finales':'Fe, esperanza y caridad';
+  if(idx!==lastMystery){if(idx>=0)reflexOpen[idx]=true;lastMystery=idx}
+  const rf=idx>=0?REFLEXIONES[TORDER[state.mystery]][idx]:null;
+  const rb=rf?'<details class="reflex" id="reflection"'+(reflexOpen[idx]?' open':'')+'><summary>Reflexión</summary><div class="inner"><p class="cita">'+esc(rf[0])+' · Reina-Valera 1909</p><p>'+esc(rf[1])+'</p><p>'+esc(rf[2])+'</p><p>'+esc(rf[3])+'</p></div></details>':'';
+  const whoA=state.starter,whoB=other(whoA);
+  let bodies;
+  if(s.key!=='fe'&&(p.body[0]===PRAY.ave1||p.body[0]===PRAY.ave2)){
+    bodies=halfBox(whoA,'Dios te salve',PRAY.ave1,p.o==='a')+halfBox(whoB,'Santa María',PRAY.ave2,p.o==='b');
+  }else if(p.title.indexOf('Letanías')===0){
+    const num=+(p.title.match(/(\d+) de/)||[])[1],next=PARTS[state.step+1],hasNext=next&&next.title.indexOf('Letanías')===0;
+    bodies=(num===1?'<p class="note" style="margin:0">'+esc(RESP)+'</p>':'')
+      +halfBox(owner,'bloque '+num,p.body[0]||'',true)
+      +(p.body[1]?'<p class="note">'+esc(p.body[1])+'</p>':'')
+      +(hasNext?halfBox(turnOwner(next),'siguiente bloque',next.body[0]||'',false):'');
+  }else bodies=p.body.map(b=>'<p class="prayer">'+esc(b)+'</p>').join('');
+  let who;
+  if(owner==='x')who=state.stepDone[my]?'Ya rezaste, falta '+NAMES[other(my)]:(state.stepDone[other(my)]?NAMES[other(my)]+' ya rezó, te toca':'Rezan los dos');
+  else who=owner===my?'Te toca a ti':'Le toca a '+NAMES[owner];
+  const joint=owner==='x'?'<p class="note">Esta parte la rezan los dos, completa. Cada quien toca el botón cuando termine.</p>':'';
+  const undo=state.undo&&state.undo.by===my?'<p class="small muted" style="margin:14px 0 0">Esperando que '+NAMES[other(my)]+' responda a tu solicitud de deshacer.</p>':'<button class="undo" data-a="undo">Deshacer avance anterior</button>';
+  return '<section class="card o-'+(owner==='x'?'x':owner)+'">'+strand(s,nx)
+    +'<div class="legend"><span style="--c:var(--isaac)">Isaac</span><span style="--c:var(--zayra)">Zayra</span><span style="--c:var(--both)">Juntos</span></div>'
+    +'<p class="mys">'+esc(mys)+'</p><p class="step" style="--c:'+colorOf(owner)+'">'+esc(who)+' · '+esc(p.title)+'</p>'
+    +bodies+joint+rb+undo+'</section>';
+}
+function renderBar(){
+  const bar=$('#bar'),go=$('#go');
+  if(!(my&&state.phase==='prayer'&&state.step<TOTAL&&screen!=='calendar'&&screen!=='edit')){bar.hidden=true;return}
+  bar.hidden=false;
+  const p=PARTS[state.step],owner=turnOwner(p),mine=owner==='x'||owner===my;
+  let label,dis=true;
+  if(!canAct())label='Sin conexión · esperando';
+  else if(inFlight)label='Guardando…';
+  else if(owner==='x'&&state.stepDone[my])label='Esperando a '+NAMES[other(my)];
+  else if(!mine)label='Espera a que '+NAMES[owner]+' rece '+p.short;
+  else{label='Ya recé '+p.short;dis=false}
+  go.disabled=dis;go.classList.toggle('pulse',!dis);go.style.setProperty('--c',colorOf(my));
+  $('#golabel').textContent=label;
+}
+
+/* ---------- historial ---------- */
+const sameDay=(h,y,m,d)=>{const x=new Date(h.date);return x.getFullYear()===y&&x.getMonth()===m&&x.getDate()===d};
+function calendarView(){
+  const yr=month.getFullYear(),mo=month.getMonth(),start=new Date(yr,mo,1).getDay(),days=new Date(yr,mo+1,0).getDate();
+  let cells=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'].map(x=>'<div class="dn">'+x+'</div>').join('');
+  for(let j=0;j<start;j++)cells+='<div class="day hollow"></div>';
+  for(let d=1;d<=days;d++){
+    const n=historyItems.filter(h=>!deleted[h.id]&&sameDay(h,yr,mo,d)).length;
+    cells+='<button class="day'+(n?' has':'')+(selDay===d?' sel':'')+'" data-a="date" data-day="'+d+'"><div>'+d+'</div><div class="hh">'+'♥'.repeat(Math.min(n,6))+'</div></button>';
+  }
+  return '<section class="card"><div class="calhead"><button class="btn" data-a="month-prev" aria-label="Mes anterior">‹</button><h2>'+esc(new Date(yr,mo,1).toLocaleDateString('es',{month:'long',year:'numeric'}))+'</h2><button class="btn" data-a="month-next" aria-label="Mes siguiente">›</button></div>'
+    +'<div class="cal">'+cells+'</div><div id="calendarDetail">'+dateDetail()+'</div>'
+    +'<button class="btn full" data-a="request-history">Recuperar historial de mi pareja</button><button class="btn main full" data-a="go-home">Volver</button></section>';
+}
+function dateDetail(){
+  if(selDay==null)return '<p class="small muted" style="margin:12px 0 0">Toca un día para ver sus rosarios.</p>';
+  const list=historyItems.filter(h=>!deleted[h.id]&&sameDay(h,month.getFullYear(),month.getMonth(),selDay));
+  if(!list.length)return '<p class="small muted" style="margin:12px 0 0">No hay rosarios registrados en esta fecha.</p>';
+  return list.map(h=>'<div class="entry"><b>'+esc(TORDER[h.mystery])+' · '+esc(new Date(h.date).toLocaleString('es'))+'</b>'
+    +'<p>Empezó: '+esc(NAMES[h.starter])+' · Terminó: '+esc(new Date(h.end).toLocaleString('es'))+'</p>'
+    +'<p><b>Isaac:</b> '+esc(h.intents&&h.intents.i)+'</p><p><b>Zayra:</b> '+esc(h.intents&&h.intents.z)+'</p>'
+    +'<button class="btn full" data-a="delete-history" data-id="'+esc(h.id)+'">Solicitar eliminación</button></div>').join('');
+}
+
+/* ---------- avisos, hojas y ventanas ---------- */
+function toast(color,inner,ms){
+  const t=$('#toast');t.className='toast';
+  t.innerHTML='<div class="tcard" style="--c:'+color+'"><div class="orb"></div><div class="tb">'+inner+'</div><button class="x" data-a="toast-x" aria-label="Cerrar">×</button></div>';
+  clearTimeout(toastTimer);if(ms)toastTimer=setTimeout(hideToast,ms);
+}
+function hideToast(){const t=$('#toast');if(!t.firstChild)return;t.className='toast out';setTimeout(()=>{t.innerHTML='';t.className='toast'},320)}
+function notice(txt,sub){toast('var(--both)','<b>'+esc(txt)+'</b>'+(sub?'<span>'+esc(sub)+'</span>':''),2600)}
+
+function pendingRequest(){
+  if(requestModal)return requestModal;
+  if(my&&state.phase==='prayer'&&state.undo&&state.undo.by!==my)return {type:'undo',from:state.undo.by};
+  return null;
+}
+function renderRequestModal(){
+  const m=pendingRequest(),box=$('#modalBody');
+  if(!m){if(!changeOpen)$('#modal').hidden=true;return}
+  let title='',body='',actions='';
+  if(m.type==='transfer'){title='Solicitud de historial';body=NAMES[m.from]+' quiere recuperar su historial desde tu celular. ¿Autorizar la transferencia?';actions='<button class="btn" data-a="request-no">No</button><button class="btn main" data-a="transfer-yes">Autorizar</button>'}
+  else if(m.type==='undo'){title='Deshacer oración';body=NAMES[m.from]+' solicita regresar a la oración anterior. ¿Lo autorizas?';actions='<button class="btn" data-a="undo-no">Rechazar</button><button class="btn main" data-a="undo-yes">Aceptar</button>'}
+  else if(m.type==='delete'){title='Eliminar un rosario';body=NAMES[m.from]+' solicita eliminar este registro del historial de ambos celulares.';actions='<button class="btn" data-a="delete-no">Rechazar</button><button class="btn warn" data-a="delete-yes">Aprobar</button>'}
+  const html='<h2>'+esc(title)+'</h2><p>'+esc(body)+'</p><div class="btns">'+actions+'</div>';
+  if(box.getAttribute('data-k')!==html){box.innerHTML=html;box.setAttribute('data-k',html)}
+  $('#modal').hidden=false;
+}
+function openChangeModal(){
+  changeOpen=true;
+  $('#modalBody').removeAttribute('data-k');
+  $('#modalBody').innerHTML='<h2>Solicitar cambio</h2><p>Tu pareja deberá aceptar el cambio.</p><label for="changeType">Elige los misterios</label><select id="changeType">'
+    +TORDER.map((x,i)=>'<option value="'+i+'"'+(i===state.mystery?' selected':'')+'>'+esc(x.charAt(0).toUpperCase()+x.slice(1))+'</option>').join('')
+    +'</select><div class="btns"><button class="btn" data-a="modal-close">Cancelar</button><button class="btn main" data-a="request-change">Enviar solicitud</button></div>';
+  $('#modal').hidden=false;
+}
+function closeModal(){changeOpen=false;$('#modal').hidden=true;$('#modalBody').removeAttribute('data-k')}
+
+function settingsHtml(){
+  const topic=pushTopic(my),isDefault=seed===DEFAULT_SEED;
+  const th=v=>'<option value="'+v[0]+'"'+(settings.theme===v[0]?' selected':'')+'>'+v[1]+'</option>';
+  return '<h2>Ajustes</h2>'
+  +'<details class="set"><summary>Mi identidad</summary><div>Estás usando el nombre <b>'+NAMES[my]+'</b>.<button class="btn full" data-a="switch-identity">Cambiar de persona</button></div></details>'
+  +'<details class="set"><summary>Apariencia y tamaño de letra</summary><div><label for="theme">Modo visual</label><select id="theme">'+[['auto','Automático'],['light','Claro'],['dark','Oscuro']].map(th).join('')+'</select>'
+    +'<label for="fontsize" id="fontlabel">Tamaño de letra · '+settings.font+'px</label><input type="range" id="fontsize" min="17" max="30" value="'+settings.font+'"></div></details>'
+  +'<details class="set"><summary>Notificaciones en el celular</summary><div><p>Instala la app ntfy y suscríbete a tu tema personal. Los avisos no incluyen enlaces al rosario.</p><div class="code">'+esc(topic)+'</div>'
+    +'<button class="btn full" data-a="copy-topic">Copiar mi tema</button><a class="btn full" href="https://ntfy.sh/app" target="_blank" rel="noopener">Abrir ntfy</a>'
+    +'<label class="chk"><input type="checkbox" id="pushchk"'+(settings.push?' checked':'')+'><span>Avisar a mi pareja cuando termine mi parte y no tenga la página abierta</span></label>'
+    +'<p class="note">No se envían notificaciones de prueba. Autoriza sonido y vibración desde los ajustes de tu celular.</p></div></details>'
+  +'<details class="set"><summary>Nuestra sala</summary><div><p>Conexión: <b id="sh-conn">'+esc(connLabel())+'</b></p><p>Los dos entran a la misma sala automáticamente'+(isDefault?'.':' con el código que se compartió.')+' Sala …'+seed.slice(-6)+'.</p>'
+    +'<button class="btn full" data-a="sync">Sincronizar ahora</button><button class="btn full" data-a="copy-link">Copiar enlace de la sala</button>'
+    +'<label for="seedin">Unirme con otro código o enlace</label><input type="text" id="seedin" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Pega aquí el código">'
+    +'<button class="btn full" data-a="join-room">Unirme</button><button class="btn full" data-a="new-room">Crear una sala nueva</button>'
+    +(isDefault?'':'<button class="btn full" data-a="default-room">Volver a la sala automática</button>')
+    +'<p class="note">Quien tenga el archivo o el código puede entrar a la sala; elegir el nombre no verifica la identidad.</p>'
+    +'<label class="chk"><input type="checkbox" id="localchk"'+(localMode?' checked':'')+'><span>Modo de prueba en este celular (sin conexión; cambia de persona para rezar las dos partes)</span></label></div></details>'
+  +'<details class="set"><summary>Misterios y rosario</summary><div><p>Los misterios del día se confirman entre ambos antes de comenzar; el cambio requiere el consentimiento de los dos.</p>'
+    +'<p>Se alternan desde el principio hasta el final. El Padre Nuestro y cada Ave María se rezan en dos mitades. La Señal de la cruz, el Credo, el Gloria y otras oraciones las reza completas cada quien; cuando termines, toca el botón.</p></div></details>'
+  +'<details class="set"><summary>Historial</summary><div><button class="btn full" data-a="calendar">Abrir calendario</button><button class="btn full" data-a="request-history">Solicitar recuperar historial del otro celular</button><p class="note">Los registros se guardan en cada dispositivo. Tu pareja deberá aprobar la transferencia.</p></div></details>'
+  +'<button class="btn main" data-a="close-settings">Listo</button>';
+}
+function connLabel(){return localMode?'Modo de prueba':(online?'Conectada':'Sin conexión')}
+function openSettings(){$('#sheetBody').innerHTML=settingsHtml();$('#sheet').hidden=false}
+function closeSettings(){$('#sheet').hidden=true}
+function refreshSheet(){const c=$('#sh-conn');if(c)c.textContent=connLabel()}
+
+/* ---------- render ---------- */
+let lastHtml='';
+function render(){
+  renderHeader();renderBanner();renderMini();renderPeople();refreshSheet();
+  let html;
+  if(!my)html=identityView();
+  else if(screen==='calendar')html=calendarView();
+  else if(screen==='edit')html=editView();
+  else if(!state.session)html=proposalView();
+  else{
+    switch(state.phase){
+      case'mysteries':html=mysteriesView();break;
+      case'intent':html=intentView();break;
+      case'reveal':html=revealView();break;
+      case'offering':html=offeringView();break;
+      case'prayer':html=prayerView();break;
+      case'finished':html=finishView();break;
+      default:html=welcomeView();
+    }
+  }
+  if(html!==lastHtml){
+    const ae=document.activeElement,keep=ae&&(ae.id==='intentField'||ae.id==='intentEdit')?{id:ae.id,s:ae.selectionStart,e:ae.selectionEnd}:null;
+    $('#view').innerHTML=html;lastHtml=html;
+    if(keep){const el=document.getElementById(keep.id);if(el){el.focus();try{el.setSelectionRange(keep.s,keep.e)}catch(e){}}}
+  }
+  renderBar();
+  renderRequestModal();
+}
+
+/* ---------- acciones ---------- */
+async function copy(s,msg){
+  try{await navigator.clipboard.writeText(s)}
+  catch(e){const ta=document.createElement('textarea');ta.value=s;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e2){}ta.remove()}
+  notice(msg||'Copiado');
+}
+function setSeedAndReload(s){
+  rawSet(SEEDKEY,s);
+  try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+  location.reload();
+}
+function toggleLocal(on){
+  localMode=on;settings.local=on;save();
+  if(on){if(source){source.close();source=null}clearInterval(heartbeat);online=false}else connect();
+  render();
+}
+async function act(a,el){
+  switch(a){
+  case'choose':my=el.dataset.who;store(prefix+'me',my);screen='home';lastPeer[my]=Date.now();render();if(online){send('hello');send('syncAsk')}return;
+  case'switch-identity':my=null;rawSet(prefix+'me',null);screen='home';closeSettings();draft=null;render();return;
+  case'settings':openSettings();return;
+  case'close-settings':closeSettings();return;
+  case'toast-x':hideToast();return;
+  case'propose':{const ok=await sendAndWait('propose',{id:uid(),starter:historyItems.length%2===0?'i':'z'});if(ok)pushPartner(NAMES[my]+' quiere rezar el rosario contigo. ❤️');return}
+  case'cancel-proposal':await sendAndWait('cancel',{id:state.proposal&&state.proposal.id});return;
+  case'decline':await sendAndWait('decline',{id:state.proposal&&state.proposal.id});return;
+  case'accept':await sendAndWait('accept',{id:state.proposal&&state.proposal.id});return;
+  case'mystery-approve':await sendAndWait('mysteryApprove');return;
+  case'select-mystery':openChangeModal();return;
+  case'request-change':{const typ=Number($('#changeType').value);closeModal();if(typ!==state.mystery)await sendAndWait('changeRequest',{type:typ});return}
+  case'change-yes':await sendAndWait('changeDecision',{accept:true});return;
+  case'change-no':await sendAndWait('changeDecision',{accept:false});return;
+  case'intent-save':{
+    const f=$('#intentField'),val=(f?f.value:'').trim();
+    if(!val){notice('Escribe tu intención antes de guardarla.');return}
+    if(!privateInt[state.session.id])privateInt[state.session.id]={};
+    privateInt[state.session.id][my]=val;draft=null;save();
+    await sendAndWait('intentCommit');return;
+  }
+  case'intent-edit':draft=null;screen='edit';render();return;
+  case'edit-save':{
+    if(state.phase!=='intent'||(state.commits.i&&state.commits.z)){screen='home';draft=null;render();return}
+    const f=$('#intentEdit'),v=(f?f.value:'').trim();
+    if(!v){notice('Tu intención no puede estar vacía.');return}
+    privateInt[state.session.id][my]=v;draft=null;save();screen='home';render();return;
+  }
+  case'edit-cancel':draft=null;screen='home';render();return;
+  case'reveal-next':await sendAndWait('revealNext');return;
+  case'offering-next':await sendAndWait('offeringNext');return;
+  case'done':{
+    if(!myTurnNow())return;
+    const ok=await sendAndWait('done',{step:state.step});
+    if(ok){notice('Tu oración quedó registrada ❤️');if(state.phase!=='finished')pushPartner('Mi amor, '+NAMES[my]+' terminó su oración. Sigamos rezando juntos. 🙏📿')}
+    return;
+  }
+  case'undo':{
+    if(state.step<=0){notice('No existe una oración anterior para deshacer.');return}
+    const ok=await sendAndWait('undoAsk',{step:Math.max(0,state.step-1)});
+    if(ok)notice('Solicitud enviada a '+NAMES[other(my)]+'.');return;
+  }
+  case'undo-yes':await sendAndWait('undoDecision',{accept:true});return;
+  case'undo-no':await sendAndWait('undoDecision',{accept:false});return;
+  case'finished-home':await sendAndWait('newFromFinished');return;
+  case'calendar':screen='calendar';closeSettings();render();return;
+  case'month-prev':month=new Date(month.getFullYear(),month.getMonth()-1,1);selDay=null;render();return;
+  case'month-next':month=new Date(month.getFullYear(),month.getMonth()+1,1);selDay=null;render();return;
+  case'date':selDay=Number(el.dataset.day);render();return;
+  case'go-home':screen='home';render();return;
+  case'copy-link':await copy(location.href.split('#')[0]+'#s='+seed,'Enlace de la sala copiado');return;
+  case'copy-topic':await copy(pushTopic(my),'Tema copiado');return;
+  case'sync':if(online){await send('syncAsk');notice('Solicitud de sincronización enviada.')}else notice('Sin conexión por ahora.');return;
+  case'retry-push':if(pushError){const x=pushError;await pushTo(x.topic.endsWith('-1')?'i':'z',x.title,x.message)}return;
+  case'local-on':toggleLocal(true);return;
+  case'local-off':toggleLocal(false);return;
+  case'join-room':{
+    const v=($('#seedin').value||'').toLowerCase(),m=v.match(/[0-9a-f]{48}/);
+    if(!m){notice('Ese código no es válido','Pega el código o el enlace completo de la sala.');return}
+    setSeedAndReload(m[0]);return;
+  }
+  case'new-room':setSeedAndReload(rand48());return;
+  case'default-room':rawSet(SEEDKEY,null);try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}location.reload();return;
+  case'request-history':
+    if(localMode){notice('Modo de prueba','No hay otro celular conectado.');return}
+    if(await sendAndWait('historyRequest',{request:uid()}))notice('Se solicitó la recuperación.','Tu pareja debe aprobarla.');return;
+  case'delete-history':{
+    const id=el.dataset.id;
+    if(localMode){deleted[id]=true;historyItems=historyItems.filter(h=>h.id!==id);save();render();return}
+    if(!online){notice('Necesitas conexión para solicitar eliminación.');return}
+    if(await sendAndWait('deleteAsk',{id}))notice('Esperando aprobación de tu pareja');return;
+  }
+  case'transfer-yes':{
+    const r=requestModal;requestModal=null;closeModal();
+    for(const h of historyItems.filter(h=>!deleted[h.id]))await send('historyTransfer',{to:r.from,items:[h]});
+    render();return;
+  }
+  case'delete-yes':{const r=requestModal;requestModal=null;closeModal();await sendAndWait('deleteApprove',{id:r.id});return}
+  case'delete-no':{const r=requestModal;requestModal=null;closeModal();await sendAndWait('deleteReject',{id:r.id});return}
+  case'request-no':requestModal=null;closeModal();render();return;
+  case'modal-close':requestModal=null;closeModal();render();return;
+  }
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener('click',e=>{
+  if(e.target.id==='sheet'){closeSettings();return}
+  const b=e.target.closest('[data-a]');
+  if(b&&!b.disabled)act(b.getAttribute('data-a'),b);
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='intentField'||t.id==='intentEdit')draft=t.value;
+  else if(t.id==='fontsize'){settings.font=Number(t.value);applySettings();save();const l=$('#fontlabel');if(l)l.textContent='Tamaño de letra · '+settings.font+'px'}
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.id==='theme'){settings.theme=t.value;save();applySettings()}
+  else if(t.id==='pushchk'){settings.push=t.checked;save()}
+  else if(t.id==='localchk')toggleLocal(t.checked);
+});
+document.addEventListener('toggle',e=>{
+  if(e.target&&e.target.id==='reflection'&&state.phase==='prayer'&&state.step<TOTAL){const p=PARTS[state.step];if(p.d>=0)reflexOpen[p.d]=e.target.open}
+},true);
+window.addEventListener('online',()=>{if(!online&&!localMode)connect()});
+window.addEventListener('offline',()=>{online=false;render()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!online&&!localMode)connect()});
+setInterval(renderPeople,15000);
+
+/* ---------- arranque ---------- */
+(async()=>{
+  render();
+  if(localMode)return;
+  if(!window.crypto||!crypto.subtle||!window.EventSource){showError('Para sincronizar necesitas abrir el archivo con HTTPS en un navegador moderno.');return}
+  try{await derive();connect()}catch(e){showError('No se pudo preparar el cifrado: '+e.message)}
+})();
+})();
+</script>
+</body></html>
